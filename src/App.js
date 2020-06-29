@@ -1,11 +1,27 @@
-import React, {Fragment, useState} from 'react';
+import React, {Fragment, useState, useEffect} from 'react';
+import Swal from "sweetalert2";
 import Formulario from "./components/Formulario";
 import Cita from "./components/Cita";
 
 function App() {
 
+  //Citas en local Storage
+  let citasIniciales = JSON.parse(localStorage.getItem('citas'));
+  if (!citasIniciales) {
+    citasIniciales = [];
+  }
+
   //Arreglo de Citas
-  const [citas, guardarCitas] = useState([]);
+  const [citas, guardarCitas] = useState(citasIniciales);
+
+  //Use Effect para realizar ciertas operaciones cuando el state cambia
+  useEffect(() => {
+    if (citasIniciales) {
+      localStorage.setItem('citas', JSON.stringify(citas));
+    } else {
+      localStorage.setItem('citas', JSON.stringify([]));
+    }
+  }, [citas]);
 
   //Función para tomar las citas actuales y agrear la nueva
   const crearCita = cita => {
@@ -14,8 +30,22 @@ function App() {
 
   //Función que elimina una cita por su ID
   const eliminarCita = id => {
-    const nuevasCitas = citas.filter(cita => cita.id !== id);
-    guardarCitas(nuevasCitas);
+    Swal.fire({
+			title: "Estás seguro?",
+			text: "Esta acción no se puede deshacer!",
+			icon: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#3085d6",
+			cancelButtonColor: "#d33",
+			confirmButtonText: "Si, borralo!",
+			cancelButtonText: "Cancelar",
+		}).then((result) => {
+			if (result.value) {
+        Swal.fire("Borrado!", "Tu cita fue borrada con éxito.", "success");
+        const nuevasCitas = citas.filter((cita) => cita.id !== id);
+				guardarCitas(nuevasCitas);
+			}
+		});   
   }
 
   //Mensaje condicional
