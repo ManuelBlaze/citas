@@ -1,6 +1,7 @@
 import React, {Fragment, useState} from 'react';
 import Swal from "sweetalert2";
 import { v4 as uuidv4 } from "uuid";
+import PropTypes from 'prop-types';
 
 const Formulario = ({ crearCita }) => {
 	//Crear state de citas
@@ -11,8 +12,6 @@ const Formulario = ({ crearCita }) => {
 		hora: "",
 		sintomas: "",
 	});
-
-	const [error, actualizarError] = useState(false);
 
 	//Funcion que se  ejecuta cada que el usuario escribe en los input
 	const actualizarState = (e) => {
@@ -37,7 +36,6 @@ const Formulario = ({ crearCita }) => {
 			hora.trim() === "" ||
 			sintomas.trim() === ""
 		) {
-			actualizarError(true);
 			Swal.fire({
 				icon: "error",
 				title: "Error",
@@ -45,7 +43,6 @@ const Formulario = ({ crearCita }) => {
 			});
 			return;
 		}
-		actualizarError(false);
 
 		//Asignar ID
 		cita.id = uuidv4();
@@ -119,5 +116,9 @@ const Formulario = ({ crearCita }) => {
 		</Fragment>
 	);
 };
+
+Formulario.propTypes = {
+    crearCita: PropTypes.func.isRequired
+}
 
 export default Formulario;

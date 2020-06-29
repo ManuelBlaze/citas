@@ -21,7 +21,7 @@ function App() {
     } else {
       localStorage.setItem('citas', JSON.stringify([]));
     }
-  }, [citas]);
+  }, [citas, citasIniciales]);
 
   //Función para tomar las citas actuales y agrear la nueva
   const crearCita = cita => {
@@ -53,7 +53,7 @@ function App() {
 
   return (
     <Fragment>
-      <h1>Administrador de Pacientes</h1>
+      <h1>Administración de Pacientes</h1>
 
       <div className="container">
         <div className="row">
