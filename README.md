@@ -1,5 +1,9 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+<h1>Administración de pacientes - veterinaria</h1>
+
+Primera aplicación con React
+
 ## Available Scripts
 
 In the project directory, you can run:
