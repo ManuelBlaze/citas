@@ -44,6 +44,7 @@ const Formulario = ({ crearCita }) => {
 			return;
 		}
 
+		Swal.fire("Hecho!", "Tu cita fue creada con éxito.", "success");
 		//Asignar ID
 		cita.id = uuidv4();
 
