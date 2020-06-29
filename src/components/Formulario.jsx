@@ -1,10 +1,10 @@
 import React, {Fragment, useState} from 'react';
 import Swal from "sweetalert2";
+import { v4 as uuidv4 } from "uuid";
 
 const Formulario = () => {
 
     //Crear state de citas
-
     const [cita, actualizarCita] = useState({
         mascota: '',
         propietario: '',
@@ -12,6 +12,8 @@ const Formulario = () => {
         hora: '',
         sintomas: ''
     });
+
+    const [error, actualizarError] = useState(false);
 
     //Funcion que se  ejecuta cada que el usuario escribe en los input
     const actualizarState = e => {
@@ -21,13 +23,34 @@ const Formulario = () => {
         })
     }
 
-    //Extraer los valores
+    //Extraer los valores Destructuring
     const{ mascota, propietario, fecha, hora, sintomas } = cita;
 
     //Cuando el usuario envía el formulario
     const submitCita = (e) => {
         e.preventDefault();
-        Swal.fire("Good job!", "You clicked the button!", "success");
+        
+
+        //Validar
+        if (mascota.trim() === '' || propietario.trim() === '' || fecha.trim() === '' || hora.trim() === '' || sintomas.trim() === '') {
+            actualizarError(true);
+            Swal.fire({
+				icon: "error",
+				title: "Error",
+				text: "Todos los campos son obligatorios!"
+            });
+            return;
+        }
+        actualizarError(false);
+
+        //Asignar ID
+        cita.id = uuidv4();
+        console.log(cita);
+
+        //Crear la cita
+
+        //Reiniciar el form
+        
     }
 
     return (
