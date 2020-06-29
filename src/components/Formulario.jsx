@@ -1,4 +1,5 @@
 import React, {Fragment, useState} from 'react';
+import Swal from "sweetalert2";
 
 const Formulario = () => {
 
@@ -23,14 +24,20 @@ const Formulario = () => {
     //Extraer los valores
     const{ mascota, propietario, fecha, hora, sintomas } = cita;
 
-    
+    //Cuando el usuario envía el formulario
+    const submitCita = (e) => {
+        e.preventDefault();
+        Swal.fire("Good job!", "You clicked the button!", "success");
+    }
 
     return (
         <Fragment>
 
             <h2>Crear Cita</h2>
 
-            <form>
+            <form
+                onSubmit={submitCita}
+            >
                 <label>Nombre Mascota</label>
                 <input 
                     type="text"
